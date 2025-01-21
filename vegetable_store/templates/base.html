@@ -1,71 +1,102 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}Vegetable Store{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: #4CAF50;
-            color: white;
-            padding: 15px;
-            text-align: center;
-        }
-        nav ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
-        nav ul li {
-            float: left;
-        }
-        nav ul li a {
-            display: block;
-            color: white;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-        }
-        nav ul li a:hover {
-            background-color: #3e8e41;
-        }
-        main {
-            padding: 20px;
-        }
-        footer {
-            background-color: #f1f1f1;
-            text-align: center;
-            padding: 10px;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+      header {
+        background-color: #4caf50;
+        color: white;
+        padding: 15px;
+        text-align: center;
+      }
+      nav ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+      nav ul li {
+        float: left;
+      }
+      nav ul li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+      }
+      nav ul li a:hover {
+        background-color: #3e8e41;
+      }
+      .navbar-nav {
+        float: right;
+      }
+      .username {
+        color: white;
+        margin-right: 10px;
+      }
+      .btn-custom {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 4px;
+        text-decoration: none;
+        cursor: pointer;
+      }
+      .btn-custom:hover {
+        background-color: #3e8e41;
+      }
+      main {
+        padding: 20px;
+      }
+      footer {
+        background-color: #f1f1f1;
+        text-align: center;
+        padding: 10px;
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <h1>Vegetable Store</h1>
-    </header>
-    <nav>
+      <h1>Vegetable Store</h1>
+      <nav>
         <ul>
-            <li><a href="/vegetable_shop/add/">Add Vegetable</a></li>
-            <li><a href="/shop/">Shop</a></li>
+          <li><a href="{% url 'shop:vegetable_list' %}">Shop</a></li>
+          <li><a href="{% url 'shop:view_cart' %}">Cart</a></li>
+          <li><a href="{% url 'dashboard:dashboard' %}">Dashboard</a></li>
+          <li class="navbar-nav">
+            {% if user.is_authenticated %}
+              <span class="username">Hello, {{ user.username }}!</span>
+              <li class="nav-item">
+                <form method="post" action="{% url 'logout' %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-custom">Logout</button>
+                </form>
+              </li>
+            {% else %}
+              <li class="nav-item">
+                <a class="btn btn-custom" href="{% url 'login' %}">Login</a>
+              </li>
+            {% endif %}
+          </li>
         </ul>
-    </nav>
-    <main>
-        {% block content %}
-        {% endblock %}
-    </main>
-    <footer>
-        <p>&copy; 2025 Vegetable Store</p>
-    </footer>
-</body>
+      </nav>
+    </header>
+
+    <main>{% block content %} {% endblock %}</main>
+  </body>
 </html>

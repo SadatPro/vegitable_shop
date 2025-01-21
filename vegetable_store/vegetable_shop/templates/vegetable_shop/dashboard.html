@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h1 style="text-align: center; margin-bottom: 20px;">Vegetable Dashboard</h1>
+<div style="max-height: 70vh; overflow-y: auto; border: 1px solid #ddd; padding: 10px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+    <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+            <thead>
+                <tr style="background-color: #4CAF50; color: white;">
+                    <th style="padding: 10px; border: 1px solid #ddd;">Name</th>
+                    <th style="padding: 10px; border: 1px solid #ddd;">Description</th>
+                    <th style="padding: 10px; border: 1px solid #ddd;">Price</th>
+                    <th style="padding: 10px; border: 1px solid #ddd;">Image</th>
+                    <th style="padding: 10px; border: 1px solid #ddd;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for vegetable in vegetables %}
+                <tr style="background-color: {% cycle 'white' 'f9f9f9' %};">
+                    <td style="padding: 10px; border: 1px solid #ddd;">{{ vegetable.name }}</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">{{ vegetable.description }}</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">${{ vegetable.price }}</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;"><img src="{{ vegetable.image.url }}" alt="{{ vegetable.name }}" style="width: 50px; height: auto; border-radius: 4px;"></td>
+                    <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">
+                        <a href="{% url 'dashboard:edit_product' vegetable.id %}" style="color: #4CAF50; text-decoration: none; margin-right: 10px;">Edit</a>
+                        <a href="{% url 'dashboard:delete_product' vegetable.id %}" style="color: #f44336; text-decoration: none;">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div style="text-align: center; margin-top: 20px;">
+    <a href="{% url 'dashboard:add_vegetable' %}" style="background-color: #4CAF50; color: white; padding: 10px 20px; border-radius: 4px; text-decoration: none; display: inline-block;">Add New Vegetable</a>
+</div>
+{% endblock %}

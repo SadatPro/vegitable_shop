@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% comment %} {% load multiply %} {% endcomment %}
+
+{% block title %}Cart{% endblock %}
+
+{% block content %}
+<h1>Your Cart</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in cart.items.all %}
+        <tr>
+            <td>{{ item.vegetable.name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>${{ item.vegetable.price }}</td>
+            {% comment %} <td>${{ item.vegetable.price|multiply:item.quantity }}</td> {% endcomment %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{% url 'shop:create_order' %}">Proceed to Checkout</a>
+{% endblock %}

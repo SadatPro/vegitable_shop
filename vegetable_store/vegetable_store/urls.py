@@ -2,11 +2,14 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('dashboard/', include('vegetable_shop.urls')),  # URL for the vegetable_shop app
-    path('shop/', include('shop.urls')),  # URL for the shop app
+    path('shop/', include('shop.urls')),  
+   path('accounts/', include('django.contrib.auth.urls')),
 ]
 
 # Serve media files during development
