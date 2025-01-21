@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h1 style="text-align: center; font-family: Arial, sans-serif;">Available Vegetables</h1>
+<ul style="padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
+    {% for vegetable in vegetables %}
+        <li style="list-style: none; border: 1px solid #ddd; border-radius: 8px; width: 250px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); text-align: center; padding: 20px; background-color: white; transition: transform 0.3s, box-shadow 0.3s;">
+            <img src="{{ vegetable.image.url }}" alt="{{ vegetable.name }}" style="width: 100%; border-radius: 4px;">
+            <h3 style="margin: 10px 0; font-family: Arial, sans-serif;">{{ vegetable.name }}</h3>
+            <p style="font-family: Arial, sans-serif;">{{ vegetable.description }}</p>
+            <p style="font-family: Arial, sans-serif;">Price: ${{ vegetable.price }}</p>
+            <button style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-family: Arial, sans-serif;">
+                Order
+            </button>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}
